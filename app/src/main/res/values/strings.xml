@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Socorra-Me</string>
+    <string name="app_logo">Logo do app</string>
+    <string name="wellcome">Obrigado por baixar o nosso aplicativo. Vamos começar conhecendo algumas de suas funcionalidades.</string>
+    <string name="advance">Avançar</string>
+    <string name="imagem_em_cartoon_de_um_policial">Imagem em cartoon de um policial</string>
+    <string name="imagem_em_cartoon_de_um_bombeiro">Imagem em cartoon de um bombeiro</string>
+    <string name="imagem_em_cartoon_de_uma_ambulancia">Imagem em cartoon de uma ambulância</string>
+    <string name="police_intro">Chame a viatura mais próxima de maneira rápida. Lembre-se é claro de não expor seu dispositivo para meliantes, sua segurança deve vir em primeiro lugar.</string>
+    <string name="ambulance_into">Em certos momento você poderá ajudar alguém através de seu dispositivo solicitando uma ambulância</string>
+    <string name="fireman_intro">Em caso de incêndio você também poderá contar com o nosso app para solicitar o corpo de bombeiros</string>
+    <string name="login_prev">Agora que você conhece melhor o nosso app, pode começar a aproveitá-lo, bastando apenas entrar em sua conta.\nCaso não tenha, você poderá criar rapidamente.</string>
+    <string name="continuar_para_o_app">Continuar para o app</string>
+    <string name="entrar">Entrar</string>
+    <string name="login">Login</string>
+    <string name="n_o_possui_conta_cadastre_se">Não possui conta? Cadastre-se.</string>
+    <string name="senha">Senha</string>
+    <string name="email">Email</string>
+    <string name="deslize_para_continuar">Deslize para continuar</string>
+    <string name="logo_do_app_com_uma_sirene">Logo do app com uma sirene</string>
+    <string name="cadastre_se">Cadastre-se</string>
+    <string name="esqueceu_a_senha">Esqueceu a senha?</string>
+</resources>

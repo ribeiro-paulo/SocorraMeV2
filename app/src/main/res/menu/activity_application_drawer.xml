@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:title="@string/perfil" />
+        <item
+            android:id="@+id/nav_contacts"
+            android:icon="@drawable/ic_person_pin_black_24dp"
+            android:title="@string/contatos_de_emerg_ncia" />
+        <item
+            android:id="@+id/nav_request_help"
+            android:icon="@drawable/ic_pin_drop_black_24dp"
+            android:title="@string/solicitar_socorro" />
+        <item
+            android:id="@+id/nav_change_account"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/alterar_conta" />
+    </group>
+
+    <item android:title="@string/utilit_rios">
+        <menu>
+            <item
+                android:id="@+id/nav_help"
+                android:icon="@drawable/ic_help_outline_black_24dp"
+                android:title="@string/ajuda" />
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_lightbulb_outline_black_24dp"
+                android:title="@string/sobre" />
+            <item
+                android:id="@+id/nav_exit"
+                android:icon="@drawable/ic_exit_to_app_black_24dp"
+                android:title="@string/sair" />
+        </menu>
+    </item>
+
+</menu>

@@ -20,4 +20,27 @@
     <string name="logo_do_app_com_uma_sirene">Logo do app com uma sirene</string>
     <string name="cadastre_se">Cadastre-se</string>
     <string name="esqueceu_a_senha">Esqueceu a senha?</string>
+    <string name="para_criar_sua_conta_basta_preencher_corretamente_os_campos_abaixo">Para criar sua conta, basta preencher corretamente os campos abaixo</string>
+    <string name="nome_completo">Nome completo</string>
+    <string name="confirmar_senha">Confirmar senha</string>
+    <string name="cadastrar_se">Cadastrar-se</string>
+    <string name="cpf">CPF</string>
+    <string name="title_activity_application">ApplicationActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="perfil">Perfil</string>
+    <string name="utilit_rios">Utilitários</string>
+    <string name="ajuda">Ajuda</string>
+    <string name="sobre">Sobre</string>
+    <string name="sair">Sair</string>
+    <string name="solicitar_socorro">Solicitar socorro</string>
+    <string name="alterar_conta">Alterar conta</string>
+    <string name="contatos_de_emerg_ncia">Contatos de emergência</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

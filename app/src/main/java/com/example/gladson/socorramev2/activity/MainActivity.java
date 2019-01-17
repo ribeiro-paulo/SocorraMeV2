@@ -61,15 +61,6 @@ public class MainActivity extends IntroActivity {
     }
 
     /**
-     * Essa classe deve ser atribuida aos botões de "Avançar" nos fragments da INTRO
-     *
-     * @param view
-     */
-    public void onAdvanceButtonClicked(View view) {
-        nextSlide();
-    }
-
-    /**
      * Classe que operará o último slider que encaminhará para a tela de login.
      *
      * @param view

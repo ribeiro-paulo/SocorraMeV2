@@ -14,9 +14,16 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         getSupportActionBar().setTitle("Nova conta");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public void onRegisterButtonClick(View view) {
         // TODO VERIFICAÇÃO PARA O LOGIN
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        this.finish();
+        return super.onSupportNavigateUp();
     }
 }

@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#42a5f5</color>
     <color name="colorPrimaryDark">#0077c2</color>
-    <color name="colorAccent">#607d8b</color>
+    <color name="colorAccent">#607D8B</color>
     <color name="background_policeman">#f6f6f6</color>
     <color name="background_gray">#90a4ae</color>
     <color name="background_orange">#ff5722</color>

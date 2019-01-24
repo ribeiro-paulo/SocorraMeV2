@@ -1,5 +1,6 @@
 package com.example.gladson.socorramev2.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -27,21 +28,14 @@ public class ApplicationActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setTitle("Socorra-me");
+
         // Adiciona o Fragment padrão.
         RequestHelpFragment requestHelpFragment = new RequestHelpFragment();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.frameLayout, requestHelpFragment);
         transaction.commit();
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -79,6 +73,10 @@ public class ApplicationActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            // TODO MENU DE CONFIGURAÇÕES PARA O COMPORTAMENTO DO APP
+            return true;
+        } else  if (id == R.id.action_about) {
+            startActivity(new Intent(this, AboutActivity.class));
             return true;
         }
 
@@ -91,20 +89,23 @@ public class ApplicationActivity extends AppCompatActivity
 
         int id = item.getItemId();
 
-        if (id == R.id.nav_profile) {
-
-        } else if (id == R.id.nav_contacts) {
-
+        if (id == R.id.nav_contacts) {
+            // TODO CRIAR UMA ABA DE CONTATOS DE EMERGÊNCIA
         } else if (id == R.id.nav_request_help) {
+            RequestHelpFragment requestHelpFragment = new RequestHelpFragment();
 
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frameLayout, requestHelpFragment);
+            transaction.commit();
         } else if (id == R.id.nav_change_account) {
-
+            // TODO ZERAR O PARÂMETRO DE MANTER CONECTADO
+            startActivity(new Intent(this, LoginActivity.class));
         } else if (id == R.id.nav_help) {
-
+            // TODO CRIAR UMA ACTIVITY DE AJUDA
         } else if (id == R.id.nav_about) {
-
+            startActivity(new Intent(this, AboutActivity.class));
         } else if (id == R.id.nav_exit) {
-
+            this.finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

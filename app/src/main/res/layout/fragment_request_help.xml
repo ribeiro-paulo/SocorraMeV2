@@ -1,14 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.RequestHelpFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <Button
+        android:id="@+id/button3"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:drawableTop="@drawable/icons8_police_48"
+        android:drawablePadding="5dp"
+        android:text="@string/chamar_pol_cia"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
-</FrameLayout>
+    <Button
+        android:id="@+id/button4"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="124dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        android:drawableTop="@drawable/icons8_fireman_48"
+        android:drawablePadding="5dp"
+        android:text="@string/chamar_bombeiros"
+        app:layout_constraintStart_toStartOf="@+id/guideline6"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+    <Button
+        android:id="@+id/button5"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:drawableTop="@drawable/icons8_ambulance_48"
+        android:drawablePadding="5dp"
+        android:text="@string/chamar_ambul_ncia"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintTop_toBottomOf="@+id/button3" />
+
+    <Button
+        android:id="@+id/button6"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="64dp"
+        android:drawableTop="@drawable/icons8_contacts_48"
+        android:drawablePadding="5dp"
+        android:text="@string/chamar_contato"
+        app:layout_constraintStart_toStartOf="@+id/guideline6"
+        app:layout_constraintTop_toBottomOf="@+id/button4" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:text="@string/pe_a_socorro_rapidamente_clicando_em_um_dos_bot_es_abaixo"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>

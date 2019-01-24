@@ -12,6 +12,9 @@ public class User {
         this.cpf = cpf;
     }
 
+    public User() {
+    }
+
     public String getName() {
         return name;
     }

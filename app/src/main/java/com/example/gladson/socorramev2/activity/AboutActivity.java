@@ -13,6 +13,9 @@ public class AboutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        getSupportActionBar().setTitle("Sobre");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         String description = "Este app tem por objetivo auxiliar a requisição de socorro " +
                 "para os principais órgãos de segurança pública de maneira rápida " +
                 "e eficiente através do GPS do dispositivo.";
@@ -28,5 +31,11 @@ public class AboutActivity extends AppCompatActivity {
                 .create();
 
         setContentView(aboutPage);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        this.finish();
+        return super.onSupportNavigateUp();
     }
 }

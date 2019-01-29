@@ -1,5 +1,6 @@
 package com.example.gladson.socorramev2.activity;
 
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +8,8 @@ import android.view.View;
 import com.example.gladson.socorramev2.R;
 
 public class RegisterActivity extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

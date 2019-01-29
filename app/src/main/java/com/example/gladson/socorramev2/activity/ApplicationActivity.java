@@ -1,10 +1,14 @@
 package com.example.gladson.socorramev2.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,10 +25,27 @@ import com.example.gladson.socorramev2.fragment.RequestHelpFragment;
 public class ApplicationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private BroadcastReceiver broadcastReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_application);
+
+        // Envia um BroadCast para a Activity anterior
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent("loginFilter"));
+
+        // BroadCast para finalizar esta activity.
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                finish();
+            }
+        };
+
+        // Adiciona o filtro ao BroadCast.
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, new IntentFilter("mainFilter"));
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -111,5 +132,13 @@ public class ApplicationActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        // Remove o BroadCast caso a activity tenha sido destruida.
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
+
+        super.onDestroy();
     }
 }

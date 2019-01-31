@@ -25,11 +25,12 @@ import com.heinrichreimersoftware.materialintro.slide.FragmentSlide;
  */
 public class MainActivity extends IntroActivity {
 
-    private static final String PREFERENCES_FILE = "PreferecesFile";
     private String[] permissions = new String[] {
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
     };
+
+    private SharedPreferences sp;
     private BroadcastReceiver broadcastReceiver;
 
     @Override
@@ -50,11 +51,13 @@ public class MainActivity extends IntroActivity {
         // Adiciona o filtro ao BroadCast.
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, new IntentFilter("mainFilter"));
 
-        // Verifica se o app foi inicializado alguma vez e ignora a tela de abertura.
-        SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCES_FILE, 0);
-        if (sharedPreferences.contains("appLaunched")) {
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(intent);
+        // Verificação das SharedPreferences
+        sp = getSharedPreferences("UserStatus", MODE_PRIVATE);
+
+        if (sp.getBoolean("logged", false)) {
+            startActivity(new Intent(getApplicationContext(), ApplicationActivity.class));
+        } else if (sp.getBoolean("appLaunched", false)) {
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         }
 
         // Desabilita a exibição dos botões de avançar e voltar.
@@ -133,10 +136,7 @@ public class MainActivity extends IntroActivity {
      */
     public void onAppContinueClicked(View view) {
         // Define que o app foi executado ao menos uma vez.
-        SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCES_FILE, 0);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("appLaunched", "yes");
-        editor.commit();
+        sp.edit().putBoolean("appLaunched", true).apply();
 
         startActivity(new Intent(this, LoginActivity.class));
     }

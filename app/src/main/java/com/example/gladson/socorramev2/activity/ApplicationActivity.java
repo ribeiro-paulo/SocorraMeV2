@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,6 +26,7 @@ import com.example.gladson.socorramev2.fragment.RequestHelpFragment;
 public class ApplicationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private SharedPreferences sp;
     private BroadcastReceiver broadcastReceiver;
 
     @Override
@@ -34,6 +36,7 @@ public class ApplicationActivity extends AppCompatActivity
 
         // Envia um BroadCast para a Activity anterior
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent("loginFilter"));
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent("mainFilter"));
 
         // BroadCast para finalizar esta activity.
         broadcastReceiver = new BroadcastReceiver() {
@@ -44,7 +47,10 @@ public class ApplicationActivity extends AppCompatActivity
         };
 
         // Adiciona o filtro ao BroadCast.
-        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, new IntentFilter("mainFilter"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, new IntentFilter("applicationFilter"));
+
+        // Configura a interface de acordo com as shared preferences.
+        sp = getSharedPreferences("UserStatus", MODE_PRIVATE);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -119,10 +125,10 @@ public class ApplicationActivity extends AppCompatActivity
             transaction.replace(R.id.frameLayout, requestHelpFragment);
             transaction.commit();
         } else if (id == R.id.nav_change_account) {
-            // TODO ZERAR O PARÂMETRO DE MANTER CONECTADO
+            sp.edit().putBoolean("logged", false).apply();
             startActivity(new Intent(this, LoginActivity.class));
         } else if (id == R.id.nav_help) {
-            // TODO CRIAR UMA ACTIVITY DE AJUDA
+            startActivity(new Intent(this, HelpActivity.class));
         } else if (id == R.id.nav_about) {
             startActivity(new Intent(this, AboutActivity.class));
         } else if (id == R.id.nav_exit) {

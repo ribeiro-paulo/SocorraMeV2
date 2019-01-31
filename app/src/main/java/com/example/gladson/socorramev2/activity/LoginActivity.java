@@ -19,6 +19,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button buttonEnter;
     private Button buttonRegister;
 
+    private SharedPreferences sp;
     private BroadcastReceiver broadcastReceiver;
 
     @Override
@@ -30,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Envia um BroadCast para a Activity anterior
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent("mainFilter"));
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent("applicationFilter"));
 
         // BroadCast para finalizar esta activity.
         broadcastReceiver = new BroadcastReceiver() {
@@ -42,11 +44,11 @@ public class LoginActivity extends AppCompatActivity {
         // Adiciona o filtro ao BroadCast.
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, new IntentFilter("loginFilter"));
 
-        /*SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCES_FILE, 0);
-        if (sharedPreferences.contains("loggedIn")) {
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(intent);
-        }*/
+        sp = getSharedPreferences("UserStatus", MODE_PRIVATE);
+
+        if (sp.getBoolean("logged", false)) {
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        }
 
         buttonEnter = findViewById(R.id.buttonEnter);
         buttonRegister = findViewById(R.id.buttonRegister);
@@ -56,10 +58,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // TODO VERIFICAR OS CAMPOS
                 // Mantém o usuário logado após o primeiro login.
-                SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCES_FILE, 0);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("loggedIn", "yes");
-                editor.commit();
+                sp.edit().putBoolean("logged", true).apply();
 
                 startActivity(new Intent(getApplicationContext(), ApplicationActivity.class));
             }

@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.gladson.socorramev2.R;
 import com.example.gladson.socorramev2.config.FirebaseConfig;
+import com.example.gladson.socorramev2.fragment.ContactFragment;
 import com.example.gladson.socorramev2.fragment.RequestHelpFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -134,7 +135,11 @@ public class ApplicationActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_contacts) {
-            // TODO CRIAR UMA ABA DE CONTATOS DE EMERGÊNCIA
+            ContactFragment contactFragment = new ContactFragment();
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frameLayout, contactFragment);
+            transaction.commit();
         } else if (id == R.id.nav_request_help) {
             RequestHelpFragment requestHelpFragment = new RequestHelpFragment();
 

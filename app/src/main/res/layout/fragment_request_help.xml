@@ -7,7 +7,7 @@
     tools:context=".fragment.RequestHelpFragment">
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/buttonCallPolice"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="120dp"
         android:layout_height="120dp"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/buttonCallFireman"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="124dp"
         android:layout_height="120dp"
@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/buttonCallAmbulance"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="120dp"
         android:layout_height="120dp"
@@ -46,10 +46,10 @@
         android:drawablePadding="5dp"
         android:text="@string/chamar_ambul_ncia"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonCallPolice" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/buttonCallContact"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="120dp"
         android:layout_height="120dp"
@@ -60,7 +60,7 @@
         android:drawablePadding="5dp"
         android:text="@string/chamar_contato"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonCallFireman" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline6"

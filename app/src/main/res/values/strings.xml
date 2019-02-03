@@ -51,4 +51,7 @@
     <string name="configura_es">Configurações</string>
     <string name="main_dev_email">gladsonsouza@live.com</string>
     <string name="processando_por_favor_aguarde">Processando, por favor aguarde...</string>
+    <string name="nome">Nome</string>
+    <string name="number_example">(00) 0000-0000</string>
+    <string name="imagem_do_contato_de_emerg_ncia">Imagem do contato de emergência.</string>
 </resources>

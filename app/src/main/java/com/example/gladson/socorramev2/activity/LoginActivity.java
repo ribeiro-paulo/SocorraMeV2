@@ -5,16 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.gladson.socorramev2.R;
 import com.example.gladson.socorramev2.config.FirebaseConfig;
-import com.example.gladson.socorramev2.fragment.LoadingFragment;
-import com.example.gladson.socorramev2.fragment.LoginFragment;
+import com.example.gladson.socorramev2.fragment.LoadingAlertFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -30,7 +33,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
 
-    private LoginFragment loginFragment = new LoginFragment();
+    private Button buttonEnter;
+    private Button buttonRegister;
+
+    private TextInputEditText editEmail;
+    private TextInputEditText editPassword;
+
+    private DialogFragment dialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,27 +66,58 @@ public class LoginActivity extends AppCompatActivity {
         // Realiza o login automático do usuário caso ele esteja logado.
         auth = FirebaseConfig.getFirebaseAuth();
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.frameLayoutLogin, loginFragment);
-        transaction.commit();
+        editEmail = findViewById(R.id.editLoginEmail);
+        editPassword = findViewById(R.id.editLoginPassword);
+
+        buttonEnter = findViewById(R.id.buttonEnter);
+        buttonRegister = findViewById(R.id.buttonRegister);
 
 
     }
 
-    public void onButtonEnterClicked() {
+    public void onButtonRegisterClicked(View view) {
+        startActivity(new Intent(this, RegisterActivity.class));
+    }
 
-        LoadingFragment loadingFragment = new LoadingFragment();
+    public void onButtonEnterClicked(View view) {
 
+        // Inicializa o DialogFragment.
+        dialogFragment = new LoadingAlertFragment();
+        dialogFragment.setCancelable(false);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameLayoutLogin, loadingFragment);
-        transaction.commit();
 
-        auth.signInWithEmailAndPassword(loginFragment.getEmail(), loginFragment.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        // Variável de validação.
+        boolean valid = true;
+
+        // Recupera dados do EditText.
+        String email = editEmail.getText().toString();
+        String password = editPassword.getText().toString();
+
+        // Verificação dos campos.
+        if (email.isEmpty()) {
+            editEmail.setError("Email inválido!");
+            valid = false;
+        }
+
+        if (password.isEmpty()) {
+            editPassword.setError("Senha inválida!");
+            valid = false;
+        }
+
+        if (valid) {
+            // Exibe o DialogFragment e Valida o Login.
+            dialogFragment.show(transaction, "");
+            validateFirebaseLogin(email, password);
+        }
+
+    }
+
+    public void validateFirebaseLogin(String email, String password) {
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frameLayoutLogin, loginFragment);
-                transaction.commit();
+                // Desmonta o DialogFragment.
+                dialogFragment.dismiss();
 
                 if (task.isSuccessful()) {
                     startActivity(new Intent(getApplicationContext(), ApplicationActivity.class));

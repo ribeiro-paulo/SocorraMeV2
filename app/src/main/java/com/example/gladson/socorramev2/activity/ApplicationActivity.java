@@ -4,13 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -19,15 +15,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.gladson.socorramev2.R;
+import com.example.gladson.socorramev2.config.FirebaseConfig;
 import com.example.gladson.socorramev2.fragment.RequestHelpFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class ApplicationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private SharedPreferences sp;
     private BroadcastReceiver broadcastReceiver;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +50,11 @@ public class ApplicationActivity extends AppCompatActivity
         // Adiciona o filtro ao BroadCast.
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, new IntentFilter("applicationFilter"));
 
-        // Configura a interface de acordo com as shared preferences.
-        sp = getSharedPreferences("UserStatus", MODE_PRIVATE);
+        // Mantém a autenticação do FirebaseAuth e Configura a interface com base nas informações.
+        auth = FirebaseConfig.getFirebaseAuth();
 
+
+        // Configura a Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -70,8 +73,22 @@ public class ApplicationActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        // Configura o NavigationView com informaçõe do usuário.
+        NavigationView navigationView = findViewById(R.id.nav_view);
+
+        FirebaseUser user = auth.getCurrentUser();
+
+        String email = user.getEmail();
+
+        View view = navigationView.getHeaderView(0);
+        TextView nav_user = view.findViewById(R.id.textViewUsername);
+        TextView nav_user_email = view.findViewById(R.id.textViewUserEmail);
+        nav_user.setText("Socorra-me");
+        nav_user_email.setText(email);
+
         navigationView.setNavigationItemSelectedListener(this);
+
+
     }
 
     @Override
@@ -102,7 +119,7 @@ public class ApplicationActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             // TODO MENU DE CONFIGURAÇÕES PARA O COMPORTAMENTO DO APP
             return true;
-        } else  if (id == R.id.action_about) {
+        } else if (id == R.id.action_about) {
             startActivity(new Intent(this, AboutActivity.class));
             return true;
         }
@@ -125,7 +142,7 @@ public class ApplicationActivity extends AppCompatActivity
             transaction.replace(R.id.frameLayout, requestHelpFragment);
             transaction.commit();
         } else if (id == R.id.nav_change_account) {
-            sp.edit().putBoolean("logged", false).apply();
+            auth.signOut();
             startActivity(new Intent(this, LoginActivity.class));
         } else if (id == R.id.nav_help) {
             startActivity(new Intent(this, HelpActivity.class));
@@ -142,9 +159,9 @@ public class ApplicationActivity extends AppCompatActivity
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
+
         // Remove o BroadCast caso a activity tenha sido destruida.
         LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
-
-        super.onDestroy();
     }
 }

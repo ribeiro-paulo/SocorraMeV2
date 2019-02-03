@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.example.gladson.socorramev2.R;
 
+// TODO TERMINAR ESTA ACTIVITY
 public class HelpActivity extends AppCompatActivity {
 
     @Override

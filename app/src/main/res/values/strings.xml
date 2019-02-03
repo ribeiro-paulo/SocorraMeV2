@@ -50,4 +50,5 @@
     <string name="chamar_contato">Chamar contato</string>
     <string name="configura_es">Configurações</string>
     <string name="main_dev_email">gladsonsouza@live.com</string>
+    <string name="processando_por_favor_aguarde">Processando, por favor aguarde...</string>
 </resources>

@@ -4,13 +4,8 @@ public class User {
 
     private String name;
     private String email;
+    private String password;
     private String cpf;
-
-    public User(String name, String email, String cpf) {
-        this.name = name;
-        this.email = email;
-        this.cpf = cpf;
-    }
 
     public User() {
     }
@@ -37,5 +32,13 @@ public class User {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

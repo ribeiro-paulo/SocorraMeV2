@@ -16,8 +16,9 @@ import android.view.View;
 
 import com.example.gladson.socorramev2.R;
 import com.example.gladson.socorramev2.helper.Permissions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.heinrichreimersoftware.materialintro.app.IntroActivity;
-import com.heinrichreimersoftware.materialintro.app.SlideFragment;
 import com.heinrichreimersoftware.materialintro.slide.FragmentSlide;
 
 /**
@@ -54,9 +55,7 @@ public class MainActivity extends IntroActivity {
         // Verificação das SharedPreferences
         sp = getSharedPreferences("UserStatus", MODE_PRIVATE);
 
-        if (sp.getBoolean("logged", false)) {
-            startActivity(new Intent(getApplicationContext(), ApplicationActivity.class));
-        } else if (sp.getBoolean("appLaunched", false)) {
+        if (sp.getBoolean("appLaunched", false)) {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         }
 
@@ -142,10 +141,23 @@ public class MainActivity extends IntroActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+
+        if (user != null) {
+            startActivity(new Intent(this, ApplicationActivity.class));
+        }
+
+    }
+
+    @Override
     protected void onDestroy() {
+        super.onDestroy();
+
         // Remove o BroadCast caso a activity tenha sido destruida.
         LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
-
-        super.onDestroy();
     }
 }

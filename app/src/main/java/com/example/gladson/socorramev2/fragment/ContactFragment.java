@@ -1,13 +1,18 @@
 package com.example.gladson.socorramev2.fragment;
 
 
+import android.content.ContentResolver;
+import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.gladson.socorramev2.R;
 import com.example.gladson.socorramev2.adapter.ContactAdapter;
@@ -19,6 +24,8 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class ContactFragment extends Fragment {
+
+    private ProgressBar progressBar;
 
     private RecyclerView recyclerView;
     private ContactAdapter adapter;
@@ -36,6 +43,7 @@ public class ContactFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_contact, container, false);
 
         // Configurações Iniciais.
+        progressBar = view.findViewById(R.id.progressBarContact);
         recyclerView = view.findViewById(R.id.recyclerViewContactList);
 
         // Configuração do Adapter.
@@ -50,4 +58,9 @@ public class ContactFragment extends Fragment {
         return view;
     }
 
+
+
+    private void initContactList() {
+        // TODO APENAS CONTATOS DE EMERGÊNCIA
+    }
 }

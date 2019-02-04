@@ -29,6 +29,8 @@ public class MainActivity extends IntroActivity {
     private String[] permissions = new String[] {
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.READ_CONTACTS,
+            Manifest.permission.SEND_SMS
     };
 
     private SharedPreferences sp;
@@ -151,6 +153,7 @@ public class MainActivity extends IntroActivity {
             startActivity(new Intent(this, ApplicationActivity.class));
         }
 
+        finish();
     }
 
     @Override

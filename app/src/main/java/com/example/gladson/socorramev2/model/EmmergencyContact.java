@@ -4,7 +4,6 @@ public class EmmergencyContact {
 
     private String name;
     private String number;
-    private String photo;
 
     public EmmergencyContact() {
     }
@@ -25,11 +24,4 @@ public class EmmergencyContact {
         this.number = number;
     }
 
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
 }

@@ -1,7 +1,6 @@
 package com.example.gladson.socorramev2.adapter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -40,13 +39,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
 
         myViewHolder.name.setText(emmergencyContact.getName());
         myViewHolder.number.setText(emmergencyContact.getNumber());
-
-        if (emmergencyContact.getPhoto() != null) {
-            // TODO FOTO DO CONTATO
-        } else {
-            myViewHolder.photo.setImageResource(R.drawable.ic_person_gray_24dp);
-        }
-
+        myViewHolder.photo.setImageResource(R.drawable.ic_person_gray_24dp);
     }
 
     @Override

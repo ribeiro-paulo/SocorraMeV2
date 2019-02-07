@@ -26,7 +26,7 @@ import com.heinrichreimersoftware.materialintro.slide.FragmentSlide;
  */
 public class MainActivity extends IntroActivity {
 
-    private String[] permissions = new String[] {
+    private String[] permissions = new String[]{
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.READ_CONTACTS,
@@ -39,6 +39,10 @@ public class MainActivity extends IntroActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Desabilita a exibição dos botões de avançar e voltar.
+        setButtonNextVisible(false);
+        setButtonBackVisible(false);
 
         // Valida as permições.
         Permissions.validatePermissions(permissions, this, 1);
@@ -59,11 +63,17 @@ public class MainActivity extends IntroActivity {
 
         if (sp.getBoolean("appLaunched", false)) {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        } else {
+            initSliders();
         }
 
-        // Desabilita a exibição dos botões de avançar e voltar.
-        setButtonNextVisible(false);
-        setButtonBackVisible(false);
+
+    }
+
+    /**
+     * Este método configura os sliders.
+     */
+    public void initSliders() {
 
         // Slider de introdução.
         addSlide(new FragmentSlide.Builder()
@@ -73,15 +83,15 @@ public class MainActivity extends IntroActivity {
 
         // Slider sobre a polícia.
         addSlide(new FragmentSlide.Builder()
-            .background(R.color.background_policeman)
-            .fragment(R.layout.intro_police)
-            .build());
+                .background(R.color.background_policeman)
+                .fragment(R.layout.intro_police)
+                .build());
 
         // Slider sobre o corpo de bombeiros.
         addSlide(new FragmentSlide.Builder()
-            .background(R.color.background_orange)
-            .fragment(R.layout.intro_fireman)
-            .build());
+                .background(R.color.background_orange)
+                .fragment(R.layout.intro_fireman)
+                .build());
 
         // Slider sobre a ambulância.
         addSlide(new FragmentSlide.Builder()
@@ -91,10 +101,10 @@ public class MainActivity extends IntroActivity {
 
         // Slider que encaminhará para a tela de login.
         addSlide(new FragmentSlide.Builder()
-            .background(R.color.mi_icon_color_dark)
-            .fragment(R.layout.intro_login)
-            .canGoForward(false)
-            .build());
+                .background(R.color.mi_icon_color_dark)
+                .fragment(R.layout.intro_login)
+                .canGoForward(false)
+                .build());
     }
 
     @Override
@@ -152,8 +162,6 @@ public class MainActivity extends IntroActivity {
         if (user != null) {
             startActivity(new Intent(this, ApplicationActivity.class));
         }
-
-        finish();
     }
 
     @Override

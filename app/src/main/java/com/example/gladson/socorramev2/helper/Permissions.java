@@ -15,9 +15,9 @@ import java.util.List;
 
 public class Permissions {
 
-    public static boolean validatePermissions(String[] permissions, Activity activity, int requestCode){
+    public static boolean validatePermissions(String[] permissions, Activity activity, int requestCode) {
 
-        if (Build.VERSION.SDK_INT >= 23 ){
+        if (Build.VERSION.SDK_INT >= 23) {
 
             List<String> permissionsList = new ArrayList<>();
 
@@ -25,18 +25,18 @@ public class Permissions {
              * verificando uma a uma
              * se já tem a permissao liberada
              */
-            for ( String permission : permissions ){
+            for (String permission : permissions) {
                 Boolean havePermissao = ContextCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_GRANTED;
-                if ( !havePermissao ) permissionsList.add(permission);
+                if (!havePermissao) permissionsList.add(permission);
             }
 
             // Caso a lista esteja vazia, não é necessário solicitar permissão
             if (permissionsList.isEmpty()) return true;
-            String[] newPermissions = new String[ permissionsList.size() ];
+            String[] newPermissions = new String[permissionsList.size()];
             permissionsList.toArray(newPermissions);
 
             //Solicita permissão
-            ActivityCompat.requestPermissions(activity, newPermissions, requestCode );
+            ActivityCompat.requestPermissions(activity, newPermissions, requestCode);
 
 
         }

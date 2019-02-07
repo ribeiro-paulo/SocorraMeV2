@@ -5,9 +5,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 /**
- *
  * Classe de configuração do Firebase para o App.
- *
  */
 public class FirebaseConfig {
 
@@ -15,7 +13,6 @@ public class FirebaseConfig {
     private static FirebaseAuth auth;
 
     /**
-     *
      * Retorna a instância do FirebaseDatabase.
      *
      * @return
@@ -29,7 +26,6 @@ public class FirebaseConfig {
     }
 
     /**
-     *
      * Retorna a instância do FirebaseAuth.
      *
      * @return

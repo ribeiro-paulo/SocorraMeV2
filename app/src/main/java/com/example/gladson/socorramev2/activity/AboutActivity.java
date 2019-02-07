@@ -1,11 +1,12 @@
 package com.example.gladson.socorramev2.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import mehdi.sakout.aboutpage.AboutPage;
 import com.example.gladson.socorramev2.R;
+
+import mehdi.sakout.aboutpage.AboutPage;
 
 public class AboutActivity extends AppCompatActivity {
 

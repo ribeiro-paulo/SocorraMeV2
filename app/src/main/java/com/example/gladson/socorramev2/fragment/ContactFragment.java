@@ -1,21 +1,23 @@
 package com.example.gladson.socorramev2.fragment;
 
 
-import android.content.ContentResolver;
-import android.database.Cursor;
-import android.os.AsyncTask;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.gladson.socorramev2.R;
 import com.example.gladson.socorramev2.adapter.ContactAdapter;
+import com.example.gladson.socorramev2.helper.EmmergencyContactDAO;
+import com.example.gladson.socorramev2.helper.RecyclerItemClickListener;
 import com.example.gladson.socorramev2.model.EmmergencyContact;
 
 import java.util.ArrayList;
@@ -46,6 +48,69 @@ public class ContactFragment extends Fragment {
         progressBar = view.findViewById(R.id.progressBarContact);
         recyclerView = view.findViewById(R.id.recyclerViewContactList);
 
+        // Adiciona o evento de Click ao RecyclerView.
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getActivity(), recyclerView,
+                        new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+
+                            }
+
+                            @Override
+                            public void onLongItemClick(View view, int position) {
+                                // Obtém o índice.
+                                final int i = position;
+
+                                // Cria o AlertDialog.
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                builder.setTitle("Remover contato");
+                                builder.setMessage("Deseja remover o contato" + "\n" +
+                                        "da sua lista de contatos de emergência?");
+                                builder.setCancelable(false);
+
+                                // Botão de negação.
+                                builder.setNegativeButton("Não", null);
+
+                                // Botão de confirmar.
+                                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        EmmergencyContact ec = contacts.get(i);
+
+                                        EmmergencyContactDAO ecDao = new EmmergencyContactDAO(getActivity());
+
+                                        if (ecDao.delete(ec)) {
+                                            loadContactList();
+                                            Toast.makeText(getActivity(),
+                                                    "Contato removido com sucesso.",
+                                                    Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(getActivity(),
+                                                    "Erro ao remover contato.",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            }
+
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            }
+                        }));
+
+        return view;
+    }
+
+    public void loadContactList() {
+        // Obtém a lista de contatos de emergência.
+        EmmergencyContactDAO ecDao = new EmmergencyContactDAO(getActivity());
+        contacts = (ArrayList<EmmergencyContact>) ecDao.list();
+
         // Configuração do Adapter.
         adapter = new ContactAdapter(contacts, getActivity());
 
@@ -54,13 +119,5 @@ public class ContactFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
-
-        return view;
-    }
-
-
-
-    private void initContactList() {
-        // TODO APENAS CONTATOS DE EMERGÊNCIA
     }
 }

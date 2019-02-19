@@ -29,7 +29,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+            app:layout_constraintTop_toBottomOf="@+id/textResetPassword" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -108,12 +108,13 @@
         </android.support.design.widget.TextInputLayout>
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/textResetPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
             android:layout_marginRight="32dp"
+            android:onClick="onTextResetPasswordClicked"
             android:text="@string/esqueceu_a_senha"
             android:textColor="@color/design_default_color_primary_dark"
             app:layout_constraintEnd_toEndOf="parent"
@@ -128,7 +129,7 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:text="Ainda não possui conta?"
+            android:text="@string/ainda_n_o_possui_conta"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/buttonEnter" />

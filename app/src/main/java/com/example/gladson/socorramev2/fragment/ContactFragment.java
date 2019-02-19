@@ -48,6 +48,8 @@ public class ContactFragment extends Fragment {
         progressBar = view.findViewById(R.id.progressBarContact);
         recyclerView = view.findViewById(R.id.recyclerViewContactList);
 
+        loadContactList();
+
         // Adiciona o evento de Click ao RecyclerView.
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getActivity(), recyclerView,

@@ -162,6 +162,8 @@ public class MainActivity extends IntroActivity {
         if (user != null) {
             startActivity(new Intent(this, ApplicationActivity.class));
         }
+
+        finish();
     }
 
     @Override

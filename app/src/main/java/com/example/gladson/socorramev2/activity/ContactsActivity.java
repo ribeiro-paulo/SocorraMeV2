@@ -61,7 +61,7 @@ public class ContactsActivity extends AppCompatActivity {
                                 // Cria o AlertDialog.
                                 AlertDialog.Builder dialog = new AlertDialog.Builder(ContactsActivity.this);
                                 dialog.setTitle("Adicionar contato");
-                                dialog.setMessage("Deseja adicionar o contato" + "\n" +
+                                dialog.setMessage("Deseja adicionar o contato: " + selectedContact.getName() + "\n" +
                                         "à sua lista de contatos de emergência?");
                                 dialog.setCancelable(false);
 
@@ -111,6 +111,9 @@ public class ContactsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Inicializa o RecyclerView com a informação de todos os contatos do usuário.
+     */
     public void initRecyclerView() {
         ContentResolver cr = getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,

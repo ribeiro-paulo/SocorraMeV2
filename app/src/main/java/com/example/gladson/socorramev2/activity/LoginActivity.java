@@ -1,7 +1,9 @@
 package com.example.gladson.socorramev2.activity;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gladson.socorramev2.R;
@@ -40,6 +43,8 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText editPassword;
 
     private DialogFragment dialogFragment;
+
+    private TextView textViewPasswordReset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,11 +77,37 @@ public class LoginActivity extends AppCompatActivity {
         buttonEnter = findViewById(R.id.buttonEnter);
         buttonRegister = findViewById(R.id.buttonRegister);
 
+        textViewPasswordReset = findViewById(R.id.textResetPassword);
 
     }
 
     public void onButtonRegisterClicked(View view) {
         startActivity(new Intent(this, RegisterActivity.class));
+    }
+
+    public void onTextResetPasswordClicked(View view) {
+
+        final String email = editEmail.getText().toString();
+
+        if (email != null && !email.equals("")) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Recuperar Senha");
+            builder.setMessage("Deseja enviar um email para a recuperação de senha?");
+            builder.setCancelable(false);
+            builder.setNegativeButton("Não", null);
+            builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    auth.sendPasswordResetEmail(editEmail.getText().toString());
+
+                    Toast.makeText(LoginActivity.this, "Email de recuperação enviado para: " + email, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            builder.create().show();
+
+        }
     }
 
     public void onButtonEnterClicked(View view) {

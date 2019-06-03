@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface IEmmergencyContactDAO {
 
-    public boolean save(EmmergencyContact emmergencyContact);
+    boolean save(EmmergencyContact emmergencyContact);
 
-    public boolean delete(EmmergencyContact emmergencyContact);
+    boolean delete(EmmergencyContact emmergencyContact);
 
-    public List<EmmergencyContact> list();
+    List<EmmergencyContact> list();
 }

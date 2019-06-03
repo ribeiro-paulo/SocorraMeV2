@@ -24,10 +24,12 @@ import com.example.gladson.socorramev2.fragment.ContactFragment;
 import com.example.gladson.socorramev2.fragment.RequestHelpFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 public class ApplicationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private MaterialSearchView searchView;
     private BroadcastReceiver broadcastReceiver;
     private FirebaseAuth auth;
 
@@ -56,7 +58,7 @@ public class ApplicationActivity extends AppCompatActivity
 
 
         // Configura a Toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setTitle("Socorra-me");
@@ -149,18 +151,16 @@ public class ApplicationActivity extends AppCompatActivity
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frameLayout, requestHelpFragment);
             transaction.commit();
-        } else if (id == R.id.nav_change_account) {
-            auth.signOut();
-            startActivity(new Intent(this, LoginActivity.class));
         } else if (id == R.id.nav_help) {
             startActivity(new Intent(this, HelpActivity.class));
         } else if (id == R.id.nav_about) {
             startActivity(new Intent(this, AboutActivity.class));
         } else if (id == R.id.nav_exit) {
-            this.finish();
+            auth.signOut();
+            startActivity(new Intent(this, LoginActivity.class));
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

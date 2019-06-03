@@ -177,14 +177,16 @@ public class RequestHelpFragment extends Fragment {
      * TODO Método temporário.
      */
     private void showUserLocation() {
+
         String message = "Latitude: " + latitude + "\n" +
-                "Longitude: " + longitude + "\n" +
-                "Endereço: " + addressLine;
+                            "Longitude: " + longitude + "\n" +
+                            "Endereço: " + addressLine;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Localização");
         builder.setMessage(message);
         builder.create().show();
+
     }
 
     /**
@@ -197,7 +199,7 @@ public class RequestHelpFragment extends Fragment {
         contacts = (ArrayList<EmmergencyContact>) ecDao.list();
 
 
-        String message = "AAA";
+        String message = "Socorro!!!";
                 /* "Me Ajude! Estou em alguma situação de perigou ou precisando de ajuda!\n";+
                 "Minha localização é: " + "\n" +
                 "Latitude: " + latitude + "\n" +
@@ -211,6 +213,15 @@ public class RequestHelpFragment extends Fragment {
             try {
                 SmsManager smsManager = SmsManager.getDefault();
                 smsManager.sendTextMessage(number, null, message, null, null);
+
+                // Verifica o tamanho do endereço para enviar.
+                if (addressLine.length() < 150) {
+                    smsManager.sendTextMessage(number, null, addressLine, null, null);
+                } else {
+                    smsManager.sendTextMessage(number, null, addressLine.substring(0, 149), null, null);
+                    smsManager.sendTextMessage(number, null, addressLine.substring(150), null, null);
+                }
+
                 Toast.makeText(getActivity(), "Mensagem enviada para: "  + number, Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 Toast.makeText(getActivity(), "Não foi possível avisar um ou mais de seus contatos.", Toast.LENGTH_SHORT).show();

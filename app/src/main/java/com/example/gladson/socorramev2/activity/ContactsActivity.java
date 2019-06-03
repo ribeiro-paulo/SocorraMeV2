@@ -9,6 +9,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
@@ -18,8 +22,11 @@ import com.example.gladson.socorramev2.adapter.ContactAdapter;
 import com.example.gladson.socorramev2.helper.EmmergencyContactDAO;
 import com.example.gladson.socorramev2.helper.RecyclerItemClickListener;
 import com.example.gladson.socorramev2.model.EmmergencyContact;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Activity por exibir todos os contatos do usuário para que ele possa selecionar
@@ -27,6 +34,7 @@ import java.util.ArrayList;
  */
 public class ContactsActivity extends AppCompatActivity {
 
+    private MaterialSearchView searchView;
     private RecyclerView recyclerView;
     private ContactAdapter adapter;
     private ArrayList<EmmergencyContact> contacts = new ArrayList<>();
@@ -36,6 +44,9 @@ public class ContactsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         // Configura a ActionBar.
         getSupportActionBar().setTitle("Adicionar contatos de emergência.");
@@ -109,6 +120,52 @@ public class ContactsActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
+        searchView = findViewById(R.id.search_view);
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+
+            }
+        });
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                search(newText.toLowerCase());
+
+                return true;
+            }
+        });
+
+
+    }
+
+    public void search(String text) {
+        ArrayList<EmmergencyContact> contactsSearch = new ArrayList<>();
+
+        for (EmmergencyContact ec : contacts) {
+            String name = ec.getName().toLowerCase();
+            String number = ec.getNumber();
+
+            if (name.contains(text) || number.contains(text)) {
+                contactsSearch.add(ec);
+            }
+        }
+
+        ContactAdapter adapter = new ContactAdapter(contactsSearch, this);
+        contacts = contactsSearch;
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     /**
@@ -138,10 +195,14 @@ public class ContactsActivity extends AppCompatActivity {
                         String phoneNo = pCur.getString(pCur.getColumnIndex(
                                 ContactsContract.CommonDataKinds.Phone.NUMBER));
 
+                        phoneNo = phoneNo.replace("-", "");
+
+                        int start = phoneNo.length() - 8;
+                        String phoneNumber = "9" + phoneNo.substring(start);
 
                         EmmergencyContact contact = new EmmergencyContact();
                         contact.setName(name);
-                        contact.setNumber(phoneNo);
+                        contact.setNumber(phoneNumber);
 
                         contacts.add(contact);
                     }
@@ -158,5 +219,18 @@ public class ContactsActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return super.onSupportNavigateUp();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+
+        // Configura o botão de pesquisa.
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+
+        return super.onCreateOptionsMenu(menu);
     }
 }

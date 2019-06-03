@@ -59,14 +59,28 @@ public class MainActivity extends IntroActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, new IntentFilter("mainFilter"));
 
         // Verificação das SharedPreferences
+
+        initSliders();
+
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
         sp = getSharedPreferences("UserStatus", MODE_PRIVATE);
 
-        if (sp.getBoolean("appLaunched", false)) {
-            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-        } else {
-            initSliders();
-        }
+        // Inicialização do firebase.
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
 
+        if (user != null) {
+            startActivity(new Intent(this, ApplicationActivity.class));
+        } else if (sp.getBoolean("appLaunched", false)) {
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        }
 
     }
 
@@ -150,20 +164,6 @@ public class MainActivity extends IntroActivity {
         sp.edit().putBoolean("appLaunched", true).apply();
 
         startActivity(new Intent(this, LoginActivity.class));
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser user = auth.getCurrentUser();
-
-        if (user != null) {
-            startActivity(new Intent(this, ApplicationActivity.class));
-        }
-
-        finish();
     }
 
     @Override

@@ -3,6 +3,8 @@ package com.example.gladson.socorramev2.fragment;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -21,6 +23,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.gladson.socorramev2.R;
+import com.example.gladson.socorramev2.activity.SendMediaActivity;
 import com.example.gladson.socorramev2.helper.EmmergencyContactDAO;
 import com.example.gladson.socorramev2.model.EmmergencyContact;
 
@@ -97,9 +100,14 @@ public class RequestHelpFragment extends Fragment {
         buttonCallContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO ENVIAR MENSAGEM
-                getAddressLocation();
-                sendSMSMessage();
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, addressLine);
+                sendIntent.setPackage("com.whatsapp");
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+                /*getAddressLocation();
+                sendSMSMessage();*/
             }
         });
 
@@ -185,6 +193,13 @@ public class RequestHelpFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Localização");
         builder.setMessage(message);
+        builder.setNeutralButton("Enviar Mídia", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(getActivity(), SendMediaActivity.class));
+            }
+        });
+        builder.setPositiveButton("Okay", null);
         builder.create().show();
 
     }
@@ -231,4 +246,15 @@ public class RequestHelpFragment extends Fragment {
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        try {
+            locationManager.removeUpdates(locationListener);
+            locationManager = null;
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

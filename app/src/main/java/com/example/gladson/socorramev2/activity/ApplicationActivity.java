@@ -29,7 +29,6 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 public class ApplicationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private MaterialSearchView searchView;
     private BroadcastReceiver broadcastReceiver;
     private FirebaseAuth auth;
 

@@ -30,7 +30,8 @@ public class MainActivity extends IntroActivity {
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.READ_CONTACTS,
-            Manifest.permission.SEND_SMS
+            Manifest.permission.SEND_SMS,
+            Manifest.permission.RECORD_AUDIO
     };
 
     private SharedPreferences sp;

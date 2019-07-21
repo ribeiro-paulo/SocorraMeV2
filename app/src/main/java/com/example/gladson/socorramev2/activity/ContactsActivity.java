@@ -25,6 +25,8 @@ import com.example.gladson.socorramev2.model.EmmergencyContact;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -38,6 +40,7 @@ public class ContactsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ContactAdapter adapter;
     private ArrayList<EmmergencyContact> contacts = new ArrayList<>();
+    private ArrayList<EmmergencyContact> viewList = new ArrayList<>();
     private EmmergencyContact selectedContact;
 
     @Override
@@ -67,7 +70,7 @@ public class ContactsActivity extends AppCompatActivity {
                             @Override
                             public void onLongItemClick(View view, int position) {
                                 // Obtém o índice.
-                                selectedContact = contacts.get(position);
+                                selectedContact = viewList.get(position);
 
                                 // Cria o AlertDialog.
                                 AlertDialog.Builder dialog = new AlertDialog.Builder(ContactsActivity.this);
@@ -129,7 +132,7 @@ public class ContactsActivity extends AppCompatActivity {
 
             @Override
             public void onSearchViewClosed() {
-
+                reload();
             }
         });
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
@@ -150,6 +153,13 @@ public class ContactsActivity extends AppCompatActivity {
 
     }
 
+    public void reload() {
+        ContactAdapter adapter = new ContactAdapter(contacts, this);
+        recyclerView.setAdapter(adapter);
+        viewList = contacts;
+        adapter.notifyDataSetChanged();
+    }
+
     public void search(String text) {
         ArrayList<EmmergencyContact> contactsSearch = new ArrayList<>();
 
@@ -163,8 +173,8 @@ public class ContactsActivity extends AppCompatActivity {
         }
 
         ContactAdapter adapter = new ContactAdapter(contactsSearch, this);
-        contacts = contactsSearch;
         recyclerView.setAdapter(adapter);
+        viewList = contactsSearch;
         adapter.notifyDataSetChanged();
     }
 
@@ -191,6 +201,7 @@ public class ContactsActivity extends AppCompatActivity {
                             ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
                             new String[]{id}, null);
 
+                    // Adiciona os números de telefone do contato para um ArrayList
                     while (pCur.moveToNext()) {
                         String phoneNo = pCur.getString(pCur.getColumnIndex(
                                 ContactsContract.CommonDataKinds.Phone.NUMBER));
@@ -198,21 +209,29 @@ public class ContactsActivity extends AppCompatActivity {
                         phoneNo = phoneNo.replace("-", "");
 
                         int start = phoneNo.length() - 8;
-                        String phoneNumber = "9" + phoneNo.substring(start);
+                        String phoneNumber = "9" + phoneNo.substring(start, start + 4) + "-" + phoneNo.substring(start + 4);
 
                         EmmergencyContact contact = new EmmergencyContact();
                         contact.setName(name);
                         contact.setNumber(phoneNumber);
 
-                        contacts.add(contact);
+                        if (contacts.size() == 0) {
+                            contacts.add(contact);
+                        } else if (!contacts.get(contacts.size() - 1).getName().equals(contact.getName())) {
+                            contacts.add(contact);
+                        }
                     }
                     pCur.close();
                 }
             }
         }
+
         if (cur != null) {
             cur.close();
         }
+
+        Collections.sort(contacts);
+        viewList = contacts;
     }
 
     @Override

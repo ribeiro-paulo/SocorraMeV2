@@ -11,6 +11,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gladson.socorramev2.R;
@@ -42,6 +45,9 @@ public class RequestHelpFragment extends Fragment {
     private Button buttonCallAmbulance;
     private Button buttonCallContact;
 
+    private ImageView imageViewLocation;
+    private TextView textViewLocation;
+
     private LocationManager locationManager;
     private LocationListener locationListener;
 
@@ -49,6 +55,13 @@ public class RequestHelpFragment extends Fragment {
     private double longitude;
     private String onLocationChanged;
     private String addressLine;
+
+    private String phoneNumberCall = null;
+
+    private final String NUMERO_POLICIA = "190";
+    private final String NUMERO_BOMBEIRO = "193";
+    private final String NUMERO_SAMU = "192";
+
 
     private ArrayList<EmmergencyContact> contacts = new ArrayList<>();
 
@@ -67,6 +80,9 @@ public class RequestHelpFragment extends Fragment {
         buttonCallAmbulance = view.findViewById(R.id.buttonCallAmbulance);
         buttonCallContact = view.findViewById(R.id.buttonCallContact);
 
+        imageViewLocation = view.findViewById(R.id.imageViewLocation);
+        textViewLocation = view.findViewById(R.id.textViewLocation);
+
         obtainUserLocation();
 
         // Configura os listeners dos botões.
@@ -75,7 +91,10 @@ public class RequestHelpFragment extends Fragment {
             public void onClick(View v) {
                 // TODO CHAMADA PARA A POLÍCIA
                 getAddressLocation();
-                showUserLocation();
+
+                if (latitude != 0 && longitude != 0) showUserLocation();
+                else cantShowUserLocation(NUMERO_POLICIA);
+
             }
         });
 
@@ -84,7 +103,9 @@ public class RequestHelpFragment extends Fragment {
             public void onClick(View v) {
                 // TODO CHAMADA PARA OS BOMBEIROS
                 getAddressLocation();
-                showUserLocation();
+
+                if (latitude != 0 && longitude != 0) showUserLocation();
+                else cantShowUserLocation(NUMERO_BOMBEIRO);
             }
         });
 
@@ -93,25 +114,22 @@ public class RequestHelpFragment extends Fragment {
             public void onClick(View v) {
                 // TODO CHAMADA PARA A AMBULÂNCIA
                 getAddressLocation();
-                showUserLocation();
+
+                if (latitude != 0 && longitude != 0) showUserLocation();
+                else cantShowUserLocation(NUMERO_SAMU);
             }
         });
 
         buttonCallContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, addressLine);
-                sendIntent.setPackage("com.whatsapp");
-                sendIntent.setType("text/plain");
-                startActivity(sendIntent);
-                /*getAddressLocation();
-                sendSMSMessage();*/
+                getAddressLocation();
+
+                if (latitude != 0 && longitude != 0) sendSMSMessage();
+                else Toast.makeText(getActivity(), "Não foi possível acessar a sua localização, mensagem não enviada", Toast.LENGTH_LONG).show();
             }
         });
 
-        // Retorno da View.
         return view;
     }
 
@@ -153,6 +171,18 @@ public class RequestHelpFragment extends Fragment {
                 Log.d("Localização", "Latitude: " + latitude);
                 Log.d("Localização", "Longitude: " + longitude);
                 Log.d("Localização", "AddressLine: " + addressLine);
+
+                /**
+                 * Feedback para o usuário saber se sua localização foi encontrada.
+                 */
+                if (latitude != 0 && longitude != 0) {
+                    imageViewLocation.setImageResource(R.drawable.ic_location_found);
+                    textViewLocation.setText("Localização obtida!");
+                } else {
+                    imageViewLocation.setImageResource(R.drawable.ic_location_search);
+                    textViewLocation.setText("Procurando localização...");
+                }
+
             }
 
             @Override
@@ -199,13 +229,33 @@ public class RequestHelpFragment extends Fragment {
                 startActivity(new Intent(getActivity(), SendMediaActivity.class));
             }
         });
-        builder.setPositiveButton("Okay", null);
+        builder.setPositiveButton("OK", null);
         builder.create().show();
 
     }
 
+    private void cantShowUserLocation(String phone) {
+        String message = "Não foi possível acessar o serviço de localização, deseja realizar uma chamada?";
+
+        phoneNumberCall = phone;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Localização");
+        builder.setMessage(message);
+        builder.setPositiveButton("OK", null);
+        builder.setNegativeButton("Chamar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Intent intent = new Intent(Intent.ACTION_CALL, Uri.fromParts("tel", phoneNumberCall, null));
+                // Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phoneNumberCall, null));
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.fromParts("tel", "+55994666855", null));
+                startActivity(intent);
+            }
+        });
+        builder.create().show();
+    }
+
     /**
-     * // TODO NÃO FUNCIONANDO CORRETAMENTE
      * Método responsável por enviar a todos os contados de emergência do usuário, uma mensagem de socorro.
      */
     private void sendSMSMessage() {
@@ -213,36 +263,27 @@ public class RequestHelpFragment extends Fragment {
         EmmergencyContactDAO ecDao = new EmmergencyContactDAO(getActivity());
         contacts = (ArrayList<EmmergencyContact>) ecDao.list();
 
+        if (contacts.size() > 0) {
+            String message = "Socorro! Preciso de Ajuda, estarei enviando minha localização...";
 
-        String message = "Socorro!!!";
-                /* "Me Ajude! Estou em alguma situação de perigou ou precisando de ajuda!\n";+
-                "Minha localização é: " + "\n" +
-                "Latitude: " + latitude + "\n" +
-                "Longitude: " + longitude + "\n" +
-                "Endereço: " + addressLine;*/
+            for (EmmergencyContact c : contacts) {
+                String number = c.getNumber();
 
-        // TODO Mover este trecho de código para uma Thread.
-        for (EmmergencyContact c : contacts) {
-            String number = c.getNumber();
-
-            try {
-                SmsManager smsManager = SmsManager.getDefault();
-                smsManager.sendTextMessage(number, null, message, null, null);
-
-                // Verifica o tamanho do endereço para enviar.
-                if (addressLine.length() < 150) {
+                try {
+                    SmsManager smsManager = SmsManager.getDefault();
+                    smsManager.sendTextMessage(number, null, message, null, null);
                     smsManager.sendTextMessage(number, null, addressLine, null, null);
-                } else {
-                    smsManager.sendTextMessage(number, null, addressLine.substring(0, 149), null, null);
-                    smsManager.sendTextMessage(number, null, addressLine.substring(150), null, null);
-                }
 
-                Toast.makeText(getActivity(), "Mensagem enviada para: "  + number, Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
-                Toast.makeText(getActivity(), "Não foi possível avisar um ou mais de seus contatos.", Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
+                    Toast.makeText(getActivity(), "Mensagem enviada para: "  + number, Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Toast.makeText(getActivity(), "Não foi possível avisar um ou mais de seus contatos", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
             }
+        } else {
+            Toast.makeText(getActivity(), "Você não possui nenhum contato de emergência para ser avisado", Toast.LENGTH_SHORT).show();
         }
+
 
     }
 

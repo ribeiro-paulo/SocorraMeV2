@@ -1,6 +1,6 @@
 package com.example.gladson.socorramev2.model;
 
-public class EmmergencyContact {
+public class EmmergencyContact implements Comparable {
 
     private String name;
     private String number;
@@ -24,4 +24,9 @@ public class EmmergencyContact {
         this.number = number;
     }
 
+    @Override
+    public int compareTo(Object o) {
+        EmmergencyContact em = (EmmergencyContact) o;
+        return getName().compareTo(em.getName());
+    }
 }

@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onButtonRegisterClicked(View view) {
-        startActivity(new Intent(this, SendMediaActivity.class));
+        startActivity(new Intent(this, RegisterActivity.class));
     }
 
     public void onTextResetPasswordClicked(View view) {

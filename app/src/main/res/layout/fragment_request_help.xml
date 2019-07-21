@@ -17,8 +17,8 @@
         android:drawableTop="@drawable/icons8_police_48"
         android:drawablePadding="5dp"
         android:text="@string/chamar_pol_cia"
-        app:layout_constraintEnd_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintEnd_toStartOf="@+id/guidelineLocation"
+        app:layout_constraintTop_toBottomOf="@+id/textViewChooseBotton" />
 
     <Button
         android:id="@+id/buttonCallFireman"
@@ -31,8 +31,8 @@
         android:drawableTop="@drawable/icons8_fireman_48"
         android:drawablePadding="5dp"
         android:text="@string/chamar_bombeiros"
-        app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintStart_toStartOf="@+id/guidelineLocation"
+        app:layout_constraintTop_toBottomOf="@+id/textViewChooseBotton" />
 
     <Button
         android:id="@+id/buttonCallAmbulance"
@@ -45,7 +45,7 @@
         android:drawableTop="@drawable/icons8_ambulance_48"
         android:drawablePadding="5dp"
         android:text="@string/chamar_ambul_ncia"
-        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineLocation"
         app:layout_constraintTop_toBottomOf="@+id/buttonCallPolice" />
 
     <Button
@@ -59,18 +59,18 @@
         android:drawableTop="@drawable/icons8_contacts_48"
         android:drawablePadding="5dp"
         android:text="@string/chamar_contato"
-        app:layout_constraintStart_toStartOf="@+id/guideline6"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLocation"
         app:layout_constraintTop_toBottomOf="@+id/buttonCallFireman" />
 
     <android.support.constraint.Guideline
-        android:id="@+id/guideline6"
+        android:id="@+id/guidelineLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/textViewChooseBotton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -84,4 +84,36 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <View
+            android:id="@+id/dividerLocation"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+        <ImageView
+            android:id="@+id/imageViewLocation"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="5dp"
+            app:srcCompat="@drawable/ic_location_search" />
+
+        <TextView
+            android:id="@+id/textViewLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Procurando localização..."
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

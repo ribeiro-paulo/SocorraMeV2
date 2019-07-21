@@ -12,10 +12,6 @@
             android:id="@+id/nav_request_help"
             android:icon="@drawable/ic_pin_drop_black_24dp"
             android:title="@string/solicitar_socorro" />
-        <item
-            android:id="@+id/nav_change_account"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/alterar_conta" />
     </group>
 
     <item android:title="@string/utilit_rios">

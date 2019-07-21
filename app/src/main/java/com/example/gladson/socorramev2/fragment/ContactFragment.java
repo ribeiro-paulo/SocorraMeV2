@@ -2,6 +2,7 @@ package com.example.gladson.socorramev2.fragment;
 
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gladson.socorramev2.R;
@@ -27,11 +29,11 @@ import java.util.ArrayList;
  */
 public class ContactFragment extends Fragment {
 
-    private ProgressBar progressBar;
-
     private RecyclerView recyclerView;
     private ContactAdapter adapter;
     private ArrayList<EmmergencyContact> contacts = new ArrayList<>();
+
+    private TextView textView;
 
     public ContactFragment() {
         // Required empty public constructor
@@ -45,8 +47,8 @@ public class ContactFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_contact, container, false);
 
         // Configurações Iniciais.
-        progressBar = view.findViewById(R.id.progressBarContact);
         recyclerView = view.findViewById(R.id.recyclerViewContactList);
+        textView = view.findViewById(R.id.textViewContacts);
 
         loadContactList();
 
@@ -56,11 +58,6 @@ public class ContactFragment extends Fragment {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-
-                            }
-
-                            @Override
-                            public void onLongItemClick(View view, int position) {
                                 // Obtém o índice.
                                 final int i = position;
 
@@ -100,6 +97,11 @@ public class ContactFragment extends Fragment {
                             }
 
                             @Override
+                            public void onLongItemClick(View view, int position) {
+
+                            }
+
+                            @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                             }
@@ -121,5 +123,9 @@ public class ContactFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
+
+        if (contacts.size() == 0) {
+            textView.setVisibility(View.VISIBLE);
+        }
     }
 }

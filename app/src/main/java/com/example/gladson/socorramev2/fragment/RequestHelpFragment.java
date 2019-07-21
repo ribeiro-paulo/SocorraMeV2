@@ -92,7 +92,7 @@ public class RequestHelpFragment extends Fragment {
                 // TODO CHAMADA PARA A POLÍCIA
                 getAddressLocation();
 
-                if (latitude != 0 && longitude != 0) showUserLocation();
+                if (latitude != 0 && longitude != 0 && addressLine != null && !addressLine.isEmpty()) showUserLocation();
                 else cantShowUserLocation(NUMERO_POLICIA);
 
             }
@@ -104,7 +104,7 @@ public class RequestHelpFragment extends Fragment {
                 // TODO CHAMADA PARA OS BOMBEIROS
                 getAddressLocation();
 
-                if (latitude != 0 && longitude != 0) showUserLocation();
+                if (latitude != 0 && longitude != 0 && addressLine != null && !addressLine.isEmpty()) showUserLocation();
                 else cantShowUserLocation(NUMERO_BOMBEIRO);
             }
         });
@@ -115,7 +115,7 @@ public class RequestHelpFragment extends Fragment {
                 // TODO CHAMADA PARA A AMBULÂNCIA
                 getAddressLocation();
 
-                if (latitude != 0 && longitude != 0) showUserLocation();
+                if (latitude != 0 && longitude != 0 && addressLine != null && !addressLine.isEmpty()) showUserLocation();
                 else cantShowUserLocation(NUMERO_SAMU);
             }
         });
@@ -125,7 +125,7 @@ public class RequestHelpFragment extends Fragment {
             public void onClick(View v) {
                 getAddressLocation();
 
-                if (latitude != 0 && longitude != 0) sendSMSMessage();
+                if (latitude != 0 && longitude != 0 && addressLine != null && !addressLine.isEmpty()) sendSMSMessage();
                 else Toast.makeText(getActivity(), "Não foi possível acessar a sua localização, mensagem não enviada", Toast.LENGTH_LONG).show();
             }
         });
@@ -242,13 +242,12 @@ public class RequestHelpFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Localização");
         builder.setMessage(message);
-        builder.setPositiveButton("OK", null);
+        builder.setPositiveButton("Não", null);
         builder.setNegativeButton("Chamar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Intent intent = new Intent(Intent.ACTION_CALL, Uri.fromParts("tel", phoneNumberCall, null));
-                // Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phoneNumberCall, null));
-                Intent intent = new Intent(Intent.ACTION_CALL, Uri.fromParts("tel", "+55994666855", null));
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phoneNumberCall, null));
                 startActivity(intent);
             }
         });

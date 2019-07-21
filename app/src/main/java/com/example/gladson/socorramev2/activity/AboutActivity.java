@@ -26,9 +26,9 @@ public class AboutActivity extends AppCompatActivity {
                 .setImage(R.drawable.logo_sc)
                 .setDescription(description)
                 .addGroup("Contate-nos")
-                .addEmail("gladsonsouza@live.com", "Email")
+                .addEmail("gladsonsouza@live.com", "Outlook")
+                .addEmail("gladsonsouzadearaujo@gmail.com", "Gmail")
                 .addGitHub("Gladson0101", "Contribua no github")
-                .addInstagram("gladson_sza", "Siga-nos no instagram")
                 .create();
 
         setContentView(aboutPage);

@@ -118,10 +118,7 @@ public class ApplicationActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            // TODO MENU DE CONFIGURAÇÕES PARA O COMPORTAMENTO DO APP
-            return true;
-        } else if (id == R.id.action_contact_manager) {
+        if (id == R.id.action_contact_manager) {
             startActivity(new Intent(this, ContactsActivity.class));
             return true;
         } else if (id == R.id.action_about) {

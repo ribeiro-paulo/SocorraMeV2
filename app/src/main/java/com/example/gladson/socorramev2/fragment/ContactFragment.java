@@ -12,11 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ProgressBar;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gladson.socorramev2.R;
+import com.example.gladson.socorramev2.activity.ContactsActivity;
 import com.example.gladson.socorramev2.adapter.ContactAdapter;
 import com.example.gladson.socorramev2.helper.EmmergencyContactDAO;
 import com.example.gladson.socorramev2.helper.RecyclerItemClickListener;
@@ -33,6 +34,7 @@ public class ContactFragment extends Fragment {
     private ContactAdapter adapter;
     private ArrayList<EmmergencyContact> contacts = new ArrayList<>();
 
+    private Button buttonAddContact;
     private TextView textView;
 
     public ContactFragment() {
@@ -49,6 +51,14 @@ public class ContactFragment extends Fragment {
         // Configurações Iniciais.
         recyclerView = view.findViewById(R.id.recyclerViewContactList);
         textView = view.findViewById(R.id.textViewContacts);
+        buttonAddContact = view.findViewById(R.id.buttonAddContact);
+
+        buttonAddContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ContactsActivity.class));
+            }
+        });
 
         loadContactList();
 
@@ -110,6 +120,12 @@ public class ContactFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadContactList();
+    }
+
     public void loadContactList() {
         // Obtém a lista de contatos de emergência.
         EmmergencyContactDAO ecDao = new EmmergencyContactDAO(getActivity());
@@ -126,6 +142,9 @@ public class ContactFragment extends Fragment {
 
         if (contacts.size() == 0) {
             textView.setVisibility(View.VISIBLE);
+        } else {
+            textView.setVisibility(View.GONE);
         }
     }
+
 }

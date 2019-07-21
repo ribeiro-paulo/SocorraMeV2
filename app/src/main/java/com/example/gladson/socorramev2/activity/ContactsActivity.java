@@ -64,11 +64,6 @@ public class ContactsActivity extends AppCompatActivity {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-
-                            }
-
-                            @Override
-                            public void onLongItemClick(View view, int position) {
                                 // Obtém o índice.
                                 selectedContact = viewList.get(position);
 
@@ -102,6 +97,11 @@ public class ContactsActivity extends AppCompatActivity {
                                 });
 
                                 dialog.create().show();
+                            }
+
+                            @Override
+                            public void onLongItemClick(View view, int position) {
+
                             }
 
                             @Override
@@ -231,6 +231,7 @@ public class ContactsActivity extends AppCompatActivity {
         }
 
         Collections.sort(contacts);
+
         viewList = contacts;
     }
 

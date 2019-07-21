@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.gladson.socorramev2.R;
 import com.example.gladson.socorramev2.config.FirebaseConfig;
 import com.example.gladson.socorramev2.fragment.LoadingAlertFragment;
+import com.example.gladson.socorramev2.helper.CpfCnpjMaks;
 import com.example.gladson.socorramev2.helper.Validator;
 import com.example.gladson.socorramev2.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -52,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
         editName = findViewById(R.id.editName);
         editEmail = findViewById(R.id.editEmail);
         editCPF = findViewById(R.id.editCPF);
+        editCPF.addTextChangedListener(CpfCnpjMaks.insert(editCPF));
         editPassword = findViewById(R.id.editPassword);
         editConfirmPassword = findViewById(R.id.editConfirmPassword);
 

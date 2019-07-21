@@ -36,15 +36,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
 
-    private Button buttonEnter;
-    private Button buttonRegister;
-
     private TextInputEditText editEmail;
     private TextInputEditText editPassword;
 
     private DialogFragment dialogFragment;
-
-    private TextView textViewPasswordReset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,10 +69,6 @@ public class LoginActivity extends AppCompatActivity {
         editEmail = findViewById(R.id.editLoginEmail);
         editPassword = findViewById(R.id.editLoginPassword);
 
-        buttonEnter = findViewById(R.id.buttonEnter);
-        buttonRegister = findViewById(R.id.buttonRegister);
-
-        textViewPasswordReset = findViewById(R.id.textResetPassword);
 
     }
 
@@ -107,6 +98,8 @@ public class LoginActivity extends AppCompatActivity {
 
             builder.create().show();
 
+        } else {
+            editEmail.setError("Entre com o email que deseja recuperar");
         }
     }
 

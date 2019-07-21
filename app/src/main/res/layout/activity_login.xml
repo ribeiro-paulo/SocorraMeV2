@@ -22,7 +22,7 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
             android:layout_marginRight="32dp"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorPrimary"
             android:onClick="onButtonEnterClicked"
             android:text="@string/entrar"
             android:textColor="@android:color/white"

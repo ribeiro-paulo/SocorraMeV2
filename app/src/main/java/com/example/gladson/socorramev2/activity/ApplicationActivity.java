@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
@@ -129,36 +130,44 @@ public class ApplicationActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
         int id = item.getItemId();
 
-        if (id == R.id.nav_contacts) {
-            ContactFragment contactFragment = new ContactFragment();
-
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frameLayout, contactFragment);
-            transaction.commit();
-        } else if (id == R.id.nav_request_help) {
-            RequestHelpFragment requestHelpFragment = new RequestHelpFragment();
-
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frameLayout, requestHelpFragment);
-            transaction.commit();
-        } else if (id == R.id.nav_help) {
-            startActivity(new Intent(this, HelpActivity.class));
-        } else if (id == R.id.nav_about) {
-            startActivity(new Intent(this, AboutActivity.class));
-        } else if (id == R.id.nav_exit) {
-            auth.signOut();
-            startActivity(new Intent(this, LoginActivity.class));
+        switch (id) {
+            case R.id.nav_contacts:
+                changeFragment(new ContactFragment());
+                break;
+            case R.id.nav_help:
+                changeFragment(new RequestHelpFragment());
+                break;
+            case R.id.nav_request_help:
+                startActivity(new Intent(this, HelpActivity.class));
+                break;
+            case R.id.nav_about:
+                startActivity(new Intent(this, AboutActivity.class));
+                break;
+            case R.id.nav_exit:
+                auth.signOut();
+                startActivity(new Intent(this, LoginActivity.class));
+                break;
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    /**
+     * Lógica de alteração delegada à um único método.
+     *
+     * @param fragment
+     */
+    private void changeFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameLayout, fragment);
+        transaction.commit();
     }
 
     @Override
